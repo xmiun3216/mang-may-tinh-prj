@@ -67,7 +67,7 @@ plt.close()
 print("- Đã lưu biểu đồ Ma trận nhầm lẫn thành 'confusion_matrix.png'")
 
 # --- Biểu đồ 2: Trực quan hóa Cây quyết định ---
-plt.figure(figsize=(20, 10))
+plt.figure(figsize=(40, 20))
 plot_tree(tree, feature_names=list(X.columns), class_names=['Normal', 'Attack'], 
           filled=True, rounded=True, fontsize=10)
 plt.title("Biểu đồ 2: Cấu trúc mô hình Cây quyết định")
