@@ -1,4 +1,0 @@
-2026-07-06 10:16:40,104 - INFO - Xác nh\u1eadn r\u1eb1ng m\u1ecdi th\u1ee9 \u0111ang ho\u1ea1t \u0111\u1ed9ng \u0111úng nh\u01b0 mong \u0111\u1ee3i | Ghi l\u1ea1i các s\u1ef1 ki\u1ec7n mang tính c\u1ed9t m\u1ed1c
-2026-07-06 10:16:40,104 - WARNING - Dùng khi có \u0111i\u1ec1u b\u1ea5t th\u01b0\u1eddng \u0111ã x\u1ea3y ra or có th\u1ec3 x\u1ea3y ra trong t\u01b0\u01a1ng lai g\u1ea7n | C\u1ea3nh báo v\u1ec1 các tình hu\u1ed1ng ko lý t\u01b0\u1edfng ch\u01b0a gây l\u1ed7i
-2026-07-06 10:16:40,104 - ERROR - Khi có v\u1ea5n \u0111\u1ec1 nghiêMm tr\u1ecdng, ph\u1ea7n m\u1ec1m ko th\u1ec3 th\u1ef1c hi\u1ec7n 1 ch\u1ee9c n\u0103ng nào \u0111ó | Ghi l\u1ea1i các l\u1ed7i khi\u1ebfn m\u1ed9t lu\u1ed3ng x\u1eed lý b\u1ecb gián 
-2026-07-06 10:16:40,104 - CRITICAL - Khi có l\u1ed7i r\u1ea5t nghiêm tr\u1ecdng, ch\u01b0\u01a1ng trình ko th\u1ec3 ch\u1ea1y \u0111\u01b0\u1ee3c | Báo \u0111\u1ed9ng \u0111\u1ecf
