@@ -1,6 +1,7 @@
 import re
 import csv
 from datetime import datetime
+import pandas as pd
 
 # Regex chuẩn để bóc tách 6 thành phần từ file access log
 LOG_PATTERN = re.compile(
@@ -13,8 +14,8 @@ def parse_and_clean_log(log_path, csv_path, max_lines=100000):
          open(csv_path, 'w', newline='', encoding='utf-8') as f_out:
         
         writer = csv.writer(f_out)
-        # Ghi đúng 6 cột theo yêu cầu của trưởng nhóm
-        writer.writerow(['IP', 'timestamp', 'method', 'uri', 'status_code', 'bytes'])
+        # BỔ SUNG: Thêm cột 'uri_raw' để quét mã độc, giữ nguyên 'uri' để đếm Endpoint
+        writer.writerow(['IP', 'timestamp', 'method', 'uri_raw', 'uri', 'status_code', 'bytes'])
         
         parsed_count = 0
         error_count = 0
@@ -29,7 +30,7 @@ def parse_and_clean_log(log_path, csv_path, max_lines=100000):
                 raw_time = match.group(2)
                 method = match.group(3)
                 
-                # TỐI ƯU: Cắt bỏ phần query string (sau dấu '?') của URI để gom nhóm tốt hơn
+                # TỐI ƯU: Lấy chuỗi gốc (uri_raw) và chuỗi đã cắt (uri)
                 uri_raw = match.group(4)
                 uri = uri_raw.split('?')[0]
                 
@@ -46,7 +47,8 @@ def parse_and_clean_log(log_path, csv_path, max_lines=100000):
                 except ValueError:
                     formatted_time = raw_time 
 
-                writer.writerow([ip, formatted_time, method, uri, status_code, bytes_sent])
+                # BỔ SUNG: Ghi thêm uri_raw vào file CSV
+                writer.writerow([ip, formatted_time, method, uri_raw, uri, status_code, bytes_sent])
                 parsed_count += 1
             else:
                 error_count += 1
@@ -56,18 +58,19 @@ def parse_and_clean_log(log_path, csv_path, max_lines=100000):
         print(f"Có {error_count} dòng không đúng định dạng chuẩn đã được bỏ qua.")
 
 if __name__ == "__main__":
-    # Đường dẫn file của bạn
+    # Đường dẫn file log gốc của bạn
     log_file_path = r"C:\BAO CAO MMT\access.log"
-    csv_file_path = r"C:\BAO CAO MMT\raw_data.csv"
+    
+    # XUẤT RA FILE MỚI: datanew.csv
+    csv_file_path = r"C:\BAO CAO MMT\datanew.csv"
     
     # Chạy với 100k dòng 
     parse_and_clean_log(log_file_path, csv_file_path, max_lines=100000)
 
-import pandas as pd
+    # Đọc lại từ file datanew.csv để kiểm tra thời gian
+    df = pd.read_csv(csv_file_path)
+    time_start = df['timestamp'].iloc[0]
+    time_end = df['timestamp'].iloc[-1]
 
-df = pd.read_csv(r"C:\BAO CAO MMT\raw_data.csv")
-time_start = df['timestamp'].iloc[0]
-time_end = df['timestamp'].iloc[-1]
-
-print(f"Mẫu dữ liệu bắt đầu từ: {time_start}")
-print(f"Mẫu dữ liệu kết thúc lúc: {time_end}")
+    print(f"Mẫu dữ liệu bắt đầu từ: {time_start}")
+    print(f"Mẫu dữ liệu kết thúc lúc: {time_end}")
