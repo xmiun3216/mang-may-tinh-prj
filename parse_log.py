@@ -60,7 +60,7 @@ if __name__ == "__main__":
     log_file_path = r"C:\BAO CAO MMT\access.log"
     csv_file_path = r"C:\BAO CAO MMT\raw_data.csv"
     
-    # Chạy với 100k dòng như bạn muốn
+    # Chạy với 100k dòng 
     parse_and_clean_log(log_file_path, csv_file_path, max_lines=100000)
 
 import pandas as pd
