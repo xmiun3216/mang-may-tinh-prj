@@ -59,10 +59,10 @@ def parse_and_clean_log(log_path, csv_path, max_lines=100000):
 
 if __name__ == "__main__":
     # Đường dẫn file log gốc của bạn
-    log_file_path = r"C:\BAO CAO MMT\access.log"
+    log_file_path = "../data/raw/access.log"
     
     # XUẤT RA FILE MỚI: datanew.csv
-    csv_file_path = r"C:\BAO CAO MMT\datanew.csv"
+    csv_file_path = "../data/processed/datanew.csv"
     
     # Chạy với 100k dòng 
     parse_and_clean_log(log_file_path, csv_file_path, max_lines=100000)
