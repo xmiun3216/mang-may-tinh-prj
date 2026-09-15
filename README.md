@@ -1,77 +1,89 @@
 # BÁO CÁO DỰ ÁN - NHÓM 04
-**TOPIC 16:** Phát hiện bất thường trong Web Server Access log bằng Machine Learning cơ bản
+**Tên đề tài (Topic 16):** Phát hiện bất thường trong Web Server Access log bằng Machine Learning cơ bản
 
-## 1. Thành viên nhóm
+## 1. Thành viên nhóm và mã sinh viên
 *   Đinh Đức Thiện – 2519960051
 *   Phạm Khánh Chi – 2519960010
 *   Lê Ngọc Minh – 2519960032
 *   Lê Phương Anh – 2519960006
 *   Nguyễn Việt Hoàng – 2519960018
 
-## 2. Kiến trúc Hệ thống
-Dự án áp dụng phương pháp **Học không giám sát (Unsupervised Learning)** để giải quyết bài toán phát hiện xâm nhập và bất thường trên Web Server:
-*   **Thuật toán cốt lõi:** `Isolation Forest`.
-*   **Cơ chế hoạt động:** Hệ thống không phụ thuộc vào dữ liệu gán nhãn sẵn. Dữ liệu sau khi trích xuất đặc trưng mức request sẽ được đưa vào mô hình để tính toán điểm số dị biệt (Anomaly Score), tự động phân lập các hành vi tấn công tàng hình, dò quét lỗ hổng hoặc đột biến lưu lượng bất thường.
+## 2. Mô tả ngắn bài toán
+Dự án giải quyết bài toán phát hiện các truy cập mạng độc hại (DDoS, rà quét lỗ hổng, Zero-day) thông qua phân tích Web Server Access log. Thay vì sử dụng các tập luật tĩnh, nhóm ứng dụng thuật toán **Học máy Không giám sát (Isolation Forest)** để tự động cô lập điểm dị thường (Anomaly) dựa trên hành vi mạng thực tế mà không cần phụ thuộc vào dữ liệu gán nhãn sẵn.
 
-## 3. Cấu trúc thư mục dự án
-```text
+## 3. Môi trường chạy và Python version
+*   **Hệ điều hành:** Windows / Linux / macOS
+*   **Python version:** Khuyến nghị Python 3.9 trở lên (3.9+).
+
+## 4. Thư viện cần cài và cách cài
+Các thư viện phụ thuộc được quản lý trong file `requirements.txt`. Khởi chạy Terminal/Command Prompt tại thư mục gốc của dự án và chạy lệnh sau để cài đặt:
+```bash
+pip install -r requirements.txt
+
+## 5. Dataset: Nguồn, vị trí file và cách tạo
+Nguồn gốc: Dữ liệu Access log thô của Web Server.
+
+Vị trí file thô: data/access.log.
+
+Cách tạo dữ liệu chuẩn bị: Dữ liệu thô được parse và làm sạch, lưu thành data/datanew.csv. Sau đó, được trích xuất thành các ma trận đặc trưng lưu tại results/tables/ thông qua các script tiền xử lý của nhóm.
+
+## 6. Cấu trúc thư mục
 Group04_Topic16/
 ├── Report_Group04.pdf                 # File báo cáo PDF
 ├── Report_Group04.docx                # File báo cáo Word
-├── README.md                          # Hướng dẫn chạy dự án
-├── requirements.txt                   # Danh sách thư viện Python phụ thuộc
+├── README.md                          # Tài liệu hướng dẫn
+├── requirements.txt                   # Danh sách thư viện Python
 ├── data/
 │   ├── access.log                     # Dữ liệu log thô
 │   └── datanew.csv                    # Dữ liệu log đã chuẩn hóa
 ├── source/                            # Mã nguồn phân tích & mô hình
-│   ├── FeatureEngineering/            # Module trích xuất đặc trưng
-│   │   └── request.py                 # Script xử lý trích xuất mức request
+│   ├── FeatureEngineering/            
+│   │   └── request.py                 # Trích xuất đặc trưng mức request
 │   ├── parse_lognew.py                # Script tiền xử lý log
 │   └── Unsupervised.py                         # Mô hình Isolation Forest
 └── results/
     ├── figures/                       # Ảnh biểu đồ trực quan hóa
-    │   ├── output5.png                # Biểu đồ phân phối điểm bất thường (Anomaly Score)
-    │   └── output6.png                # Biểu đồ phân tích PCA (Trực quan hóa không gian)
+    │   ├── anomaly_timewindow_15min.png
+    │   ├── http_status_distribution.png
+    │   ├── pca_data_space.png
+    │   ├── phan_bo_anomaly_score.png
+    │   ├── phan_bo_muc_do_rui_ro.png
+    │   ├── timewindow_by_root_cause.png
+    │   └── tuong_quan_url_payload.png
     └── tables/                        # Bảng dữ liệu đầu ra
-        ├── request_level_features.csv # Bảng đặc trưng mức request 
-        ├── aggregated_ip_features.csv # Đặc trưng tổng hợp theo IP 
-        └── Anomalies_Timeline.csv     # Dòng thời gian điểm bất thường 
+        ├── aggregated_ip_features.csv 
+        ├── Anomalies_Timeline.csv     
+        ├── features_comparision.csv   
+        └── request_level_features.csv
 
-## 4. Cài đặt môi trường
-Mở Terminal/Command Prompt tại thư mục gốc của dự án và cài đặt các thư viện cần thiết:
+## 7. Thứ tự chạy các script
+Vui lòng thực hiện theo trình tự các bước sau
 
-        pip install -r requirements.txt
+Bước 1: Tiền xử lý dữ liệu log thô
 
-## 5. Hướng dẫn chạy chương trình
-Chạy lần lượt các thư mục python trong thư mục 'source/':
+        python source/parse_lognew.py
 
-**Bước 1: Tiền xử lí dữ liệu log thô**
-Làm sạch, bóc tách các trường từ file access.log và chuẩn hóa về datanew.csv.
-
-        python source/parse_lognew.py   
-
-**Bước 2: Trích xuất đặc trưng mức yêu cầu (Request-level)**
-Xử lý dữ liệu chuẩn hóa thành ma trận đặc trưng mô tả hành vi mạng ở mức từng request, sinh ra file FeatureEngineering/request_level_features.csv làm dữ liệu đầu vào cho mô hình:
+Bước 2: Trích xuất đặc trưng mức yêu cầu (Request-level)
 
         python source/FeatureEngineering/request.py
 
-**Bước 3: Huấn luyện và phát hiện dị biệt (Isolation Forest)**
-Chạy mô hình học không giám sát để tính toán điểm bất thường (Anomaly Score), phân lập các truy cập độc hại và xuất báo cáo kết quả:
+Bước 3: Huấn luyện mô hình và phát hiện dị biệt (Isolation Forest)
 
         python source/Unsupervised.py
 
-**Đầu ra (Outcomes) của hệ thống**:
+## 8. Output mong đợi
+Sau khi hoàn thành Bước 3, hệ thống sẽ tự động xuất ra các tệp tin tại thư mục results/:
 
-Sau khi chạy hoàn tất, các file dữ liệu sẽ tự động sinh ra và lưu tại thư mục results/tables/:
+Tables (results/tables/): Các bảng CSV chứa ma trận đặc trưng, phân tích so sánh (features_comparision.csv) và danh sách luồng IP bị cảnh báo bất thường cùng dòng thời gian (Anomalies_Timeline.csv).
 
-request_level_features.csv: Bảng đặc trưng hành vi mạng theo request.
+Figures (results/figures/): 7 biểu đồ .png trực quan hóa phân bố trạng thái HTTP, tương quan URL, phân bố Anomaly Score, và không gian dữ liệu PCA.
 
-aggregated_ip_features.csv: Bảng tổng hợp các đặc trưng hành vi nhóm theo từng địa chỉ IP.
+## 9. Ghi chú về random_state và cấu hình tái lập
 
-Anomalies_Timeline.csv: Bảng thống kê chi tiết dòng thời gian của các luồng truy cập bị cắm cờ bất thường.
+Nhằm đảm bảo tính tái lập kết quả (Reproducibility), thuật toán Isolation Forest được cấu hình cứng tham số khởi tạo hạt giống ngẫu nhiên: random_state = 42. Điều này đảm bảo trong mọi lần chạy lại script hoặc trên các môi trường máy tính khác nhau, điểm dị biệt (Anomaly Score) và danh sách các IP bị chặn sẽ hội tụ ra kết quả giống hệt nhau 100%.
 
-Đồng thời, các biểu đồ phân tích trực quan sẽ được tự động lưu tại thư mục results/figures/:
+## 10. Các giới hạn hoặc lưu ý an toàn
 
-output5.png: Biểu đồ phân bố điểm dị biệt (Anomaly Score) và ngưỡng cắt phân loại.
+Đường dẫn tương đối: Script sử dụng đường dẫn tương đối để đọc/ghi file. Vui lòng luôn gọi lệnh thực thi python từ thư mục gốc của dự án (Group04_Topic16) để tránh lỗi FileNotFoundError.
 
-output6.png: Biểu đồ phân bố không gian dữ liệu PCA (đã chuẩn hóa StandardScaler) phân lập truy cập hợp lệ và bất thường.
+Bản chất thuật toán: Do sử dụng phương pháp Không giám sát, điểm số cô lập (Anomaly Score) đóng vai trò là "cảnh báo sớm" thay vì bộ luật chặn tĩnh. Cần kết hợp với chuyên gia phân tích để điều chỉnh tham số ngưỡng cắt (contamination) nhằm tránh hiện tượng cảnh báo giả (False Positive) làm gián đoạn người dùng hợp lệ.
