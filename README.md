@@ -27,9 +27,11 @@ Group04_Topic16/
 │   ├── FeatureEngineering/            # Module trích xuất đặc trưng
 │   │   └── request.py                 # Script xử lý trích xuất mức request
 │   ├── parse_lognew.py                # Script tiền xử lý log
-│   └── Unsupervised.py                # Mô hình Isolation Forest
+│   └── Unsupervised.py                         # Mô hình Isolation Forest
 └── results/
-    ├── figures/                       # Ảnh biểu đồ kết quả
+    ├── figures/                       # Ảnh biểu đồ trực quan hóa
+    │   ├── output5.png                # Biểu đồ phân phối điểm bất thường (Anomaly Score)
+    │   └── output6.png                # Biểu đồ phân tích PCA (Trực quan hóa không gian)
     └── tables/                        # Bảng dữ liệu đầu ra
         ├── request_level_features.csv # Bảng đặc trưng mức request 
         ├── aggregated_ip_features.csv # Đặc trưng tổng hợp theo IP 
@@ -59,6 +61,7 @@ Chạy mô hình học không giám sát để tính toán điểm bất thườ
         python source/Unsupervised.py
 
 **Đầu ra (Outcomes) của hệ thống**:
+
 Sau khi chạy hoàn tất, các file dữ liệu sẽ tự động sinh ra và lưu tại thư mục results/tables/:
 
 request_level_features.csv: Bảng đặc trưng hành vi mạng theo request.
@@ -66,3 +69,9 @@ request_level_features.csv: Bảng đặc trưng hành vi mạng theo request.
 aggregated_ip_features.csv: Bảng tổng hợp các đặc trưng hành vi nhóm theo từng địa chỉ IP.
 
 Anomalies_Timeline.csv: Bảng thống kê chi tiết dòng thời gian của các luồng truy cập bị cắm cờ bất thường.
+
+Đồng thời, các biểu đồ phân tích trực quan sẽ được tự động lưu tại thư mục results/figures/:
+
+output5.png: Biểu đồ phân bố điểm dị biệt (Anomaly Score) và ngưỡng cắt phân loại.
+
+output6.png: Biểu đồ phân bố không gian dữ liệu PCA (đã chuẩn hóa StandardScaler) phân lập truy cập hợp lệ và bất thường.
