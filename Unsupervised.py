@@ -61,7 +61,7 @@ plt.show()
 
 # 2. Kiểm tra bằng Thống kê trung bình (Rất quan trọng)
 print("\n--- BẢNG SO SÁNH ĐẶC TRƯNG GIỮA NORMAL VÀ ATTACK ---")
-profile = agg_df.groupby('Label')[['request_count', 'error_4xx_rate', 'error_5xx_rate', 'unique_uri_count', 'suspicious_flag_count']].mean()
+profile = agg_df.groupby('Label')[['request_count', 'error_4xx_rate', 'error_5xx_rate', 'avg_payload_bytes', 'max_payload_bytes', 'unique_uri_count', 'suspicious_flag_count']].mean()
 print(profile)
 
 # 3. Kiểm tra bằng phân bố PCA
