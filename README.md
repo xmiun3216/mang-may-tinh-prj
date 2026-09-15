@@ -23,17 +23,17 @@ Group04_Topic16/
 ├── data/
 │   ├── access.log                     # Dữ liệu log thô
 │   └── datanew.csv                    # Dữ liệu log đã chuẩn hóa
-├── FeatureEngineering/                # Module trích xuất đặc trưng
-│   ├── request.py                     # Script xử lý trích xuất mức request
-│   └── request_level_features.csv     # Bảng đặc trưng mức request đầu ra
 ├── source/                            # Mã nguồn phân tích & mô hình
+│   ├── FeatureEngineering/            # Module trích xuất đặc trưng
+│   │   └── request.py                 # Script xử lý trích xuất mức request
 │   ├── parse_lognew.py                # Script tiền xử lý log
-│   └── tv3.py                         # Mô hình Isolation Forest
+│   └── Unsupervised.py                # Mô hình Isolation Forest
 └── results/
     ├── figures/                       # Ảnh biểu đồ kết quả
     └── tables/                        # Bảng dữ liệu đầu ra
-        ├── aggregated_ip_features.csv # Đặc trưng tổng hợp theo IP (Từ TV3)
-        └── Anomalies_Timeline.csv     # Dòng thời gian điểm bất thường (Từ TV3)
+        ├── request_level_features.csv # Bảng đặc trưng mức request 
+        ├── aggregated_ip_features.csv # Đặc trưng tổng hợp theo IP 
+        └── Anomalies_Timeline.csv     # Dòng thời gian điểm bất thường 
 
 ## 4. Cài đặt môi trường
 Mở Terminal/Command Prompt tại thư mục gốc của dự án và cài đặt các thư viện cần thiết:
@@ -51,15 +51,17 @@ Làm sạch, bóc tách các trường từ file access.log và chuẩn hóa v�
 **Bước 2: Trích xuất đặc trưng mức yêu cầu (Request-level)**
 Xử lý dữ liệu chuẩn hóa thành ma trận đặc trưng mô tả hành vi mạng ở mức từng request, sinh ra file FeatureEngineering/request_level_features.csv làm dữ liệu đầu vào cho mô hình:
 
-        python FeatureEngineering/request.py
+        python source/FeatureEngineering/request.py
 
 **Bước 3: Huấn luyện và phát hiện dị biệt (Isolation Forest)**
 Chạy mô hình học không giám sát để tính toán điểm bất thường (Anomaly Score), phân lập các truy cập độc hại và xuất báo cáo kết quả:
 
         python source/Unsupervised.py
 
-**Đầu ra (Outcomes) của mô hình Isolation Forest**:
-Sau khi chạy xong Bước 3, mô hình sẽ tự động sinh ra 2 file báo cáo lưu tại thư mục results/tables/ (hoặc thư mục gốc tùy cấu hình code):
+**Đầu ra (Outcomes) của hệ thống**:
+Sau khi chạy hoàn tất, các file dữ liệu sẽ tự động sinh ra và lưu tại thư mục results/tables/:
+
+request_level_features.csv: Bảng đặc trưng hành vi mạng theo request.
 
 aggregated_ip_features.csv: Bảng tổng hợp các đặc trưng hành vi nhóm theo từng địa chỉ IP.
 
