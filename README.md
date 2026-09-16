@@ -59,6 +59,10 @@ Group04_Topic16/
 ## 7. Thứ tự chạy các script
 Vui lòng thực hiện theo trình tự các bước sau
 
+**Link data gốc (do file data gốc quá lớn): https://drive.google.com/file/d/1BALRNxzBnLYjlBi7LYju92t7N4s0YUXx/view?usp=sharing **
+
+Vui lòng tải file data gốc vào cùng thư mục này trước khi thực hiện bước 1
+
 Bước 1: Tiền xử lý dữ liệu log thô
 
         python source/parse_lognew.py
